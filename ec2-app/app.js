@@ -6,7 +6,7 @@ const PORT = 3000;
 
 
 app.get('/', async (req, res) => {
-  const apiUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+  const apiUrl = 'https://cf-fauna.shadidhaque2014.workers.dev/';
 
   try {
     // Record the start time
