@@ -36,25 +36,33 @@ app.get('/', async (req, res) => {
   }
 });
 
-// New POST endpoint for /write
+// Updated POST endpoint for /write
 app.post('/write', async (req, res) => {
   const apiUrl = 'https://cf-fauna.shadidhaque2014.workers.dev/';
-  const dataToSend = req.body;
+  console.log('Request body --->', req.body);
+  const dataToSend = {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    stock: req.body.stock,
+    category: req.body.category,
+  };
 
   try {
-    // Make the POST request to the external API
+    // Make the POST request to the target API
     const response = await axios.post(apiUrl, dataToSend);
 
-    // Send the response from the external API
+    // Send the response from the target API
     res.json({
       message: 'Data written successfully',
-      data: response.data
+      data: response.data,
     });
   } catch (error) {
     console.error('Error writing data to external API:', error);
     res.status(500).json({ message: 'Error writing data to external API' });
   }
 });
+
 
 // Start the server
 app.listen(PORT, () => {
