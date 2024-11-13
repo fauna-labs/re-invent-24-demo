@@ -56,6 +56,26 @@ const SelectWithButtons = () => {
     }
   };
 
+  const renderResult = () => {
+    if (!result) return null;
+
+    const { timeTaken, ...restData } = result;
+    
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 bg-blue-50 p-4 rounded-lg">
+          <span className="font-semibold text-blue-700">Time Taken:</span>
+          <span className="text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+            {timeTaken}
+          </span>
+        </div>
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <pre className="whitespace-pre-wrap">{JSON.stringify(restData, null, 2)}</pre>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="p-4 space-y-4">
       <select 
@@ -92,11 +112,7 @@ const SelectWithButtons = () => {
           Error: {error}
         </div>
       )}
-      {result && (
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <pre className="whitespace-pre-wrap">{JSON.stringify(result, null, 2)}</pre>
-        </div>
-      )}
+      {renderResult()}
     </div>
   );
 };
