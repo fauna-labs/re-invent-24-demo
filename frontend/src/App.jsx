@@ -12,47 +12,57 @@ const SelectWithButtons = () => {
     setError(null);
   };
 
-  const handleButtonOne = async () => {
-    // Only proceed if us-east-1 is selected
-    if (selectedOption === 'option1') {
-      setLoading(true);
-      setResult(null);
-      setError(null);
-      
-      try {
-        const response = await fetch('http://ec2-54-198-221-235.compute-1.amazonaws.com:3000?read');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setResult(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const handleWrite = async () => {
+    let url = 'http://ec2-54-198-221-235.compute-1.amazonaws.com:3000/write'
+    setLoading(true);
+    setResult(null);
+    setError(null);
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `MacBook ${new Date().toISOString()}`, // Add a timestamp to the name for uniqueness
+          description: "A computer",
+          price: 300,
+          stock: 20,
+          category: "Electronics"
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      const data = await response.json();
+      setResult(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleButtonTwo = async () => {
+  const handleRead = async () => {
     // Only proceed if us-east-1 is selected
-    if (selectedOption === 'option1') {
-      setLoading(true);
-      setResult(null);
-      setError(null);
-      
-      try {
-        const response = await fetch('http://ec2-54-198-221-235.compute-1.amazonaws.com:3000?read');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setResult(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+    let url = 'http://ec2-54-198-221-235.compute-1.amazonaws.com:3000'
+    setLoading(true);
+    setResult(null);
+    setError(null);
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      const data = await response.json();
+      setResult(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,7 +100,7 @@ const SelectWithButtons = () => {
       
       <div className="flex gap-4">
         <button
-          onClick={handleButtonOne}
+          onClick={handleWrite}
           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
           disabled={loading}
         >
@@ -98,7 +108,7 @@ const SelectWithButtons = () => {
         </button>
         
         <button
-          onClick={handleButtonTwo}
+          onClick={handleRead}
           className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
           disabled={loading}
         >

@@ -49,13 +49,19 @@ app.post('/write', async (req, res) => {
   };
 
   try {
+    // Record the start time
+    const startTime = Date.now();
     // Make the POST request to the target API
     const response = await axios.post(apiUrl, dataToSend);
 
     // Send the response from the target API
+
+    // Calculate the time taken in milliseconds
+    const timeTaken = Date.now() - startTime;
     res.json({
       message: 'Data written successfully',
       data: response.data,
+      timeTaken: `${timeTaken}ms`
     });
   } catch (error) {
     console.error('Error writing data to external API:', error);
