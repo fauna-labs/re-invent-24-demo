@@ -17,3 +17,6 @@ There is a simple node.js server that is provided in the `ec2-app` folder. You c
 
 A react application is in `frontend` folder. The React application make requests to the ec2 servers in various location demostrating that the ec2 servers recieve data from the Fauna Cloudflare serverless REST api in almost same time. 
 
+Frontend application is deployed at 
+
+https://sweet-brigadeiros-9add5b.netlify.app/

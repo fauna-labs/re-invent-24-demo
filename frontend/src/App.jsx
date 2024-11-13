@@ -13,7 +13,7 @@ const SelectWithButtons = () => {
   };
 
   const handleWrite = async () => {
-    let url = 'http://ec2-54-198-221-235.compute-1.amazonaws.com:3000/write'
+    let url = '/api/write'
     setLoading(true);
     setResult(null);
     setError(null);
@@ -47,7 +47,7 @@ const SelectWithButtons = () => {
 
   const handleRead = async () => {
     // Only proceed if us-east-1 is selected
-    let url = 'http://ec2-54-198-221-235.compute-1.amazonaws.com:3000'
+    let url = '/api'
     setLoading(true);
     setResult(null);
     setError(null);
