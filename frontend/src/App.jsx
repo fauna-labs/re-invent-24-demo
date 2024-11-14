@@ -14,6 +14,11 @@ const SelectWithButtons = () => {
 
   const handleWrite = async () => {
     let url = '/api/write'
+
+    if (selectedOption === 'option2') {
+      url = '/west/write';
+    }
+
     setLoading(true);
     setResult(null);
     setError(null);
@@ -48,6 +53,11 @@ const SelectWithButtons = () => {
   const handleRead = async () => {
     // Only proceed if us-east-1 is selected
     let url = '/api'
+
+    if (selectedOption === 'option2') {
+      url = '/west';
+    }
+
     setLoading(true);
     setResult(null);
     setError(null);

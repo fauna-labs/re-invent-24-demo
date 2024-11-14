@@ -25,6 +25,8 @@ app.get('/', async (req, res) => {
     // Calculate the time taken in milliseconds
     const timeTaken = Date.now() - startTime;
 
+    console.log('Response data --->', response);
+
     // Send the API response data and time taken
     res.json({
       data: response.data,

@@ -31,13 +31,15 @@ export default {
  * Get all products from the database
  */
 async function getAllProducts(request: Request, env: Env): Promise<Response> {
+	const startTime = Date.now();
   // Custom GET logic here (e.g., fetching data from Fauna)
 	const client = new Client({ secret: env.FAUNA_SECRET });
 	try {
 		const result = await client.query(fql`
-			Product.all()
+			Product.byName("The Godfather")
 		`);
-		return new Response(JSON.stringify(result.data));
+		const timeTaken = Date.now() - startTime;
+		return new Response(JSON.stringify({...result.data, stats: result.stats, worker_execution_time_ms: timeTaken}));
 	} catch (error) {
 		if (error instanceof FaunaError) {
 			return new Response(error.message, {status: 500});
@@ -48,6 +50,7 @@ async function getAllProducts(request: Request, env: Env): Promise<Response> {
 
 // Handler for POST request
 async function createNewProduct(request: Request, env: Env): Promise<Response> {
+	const startTime = Date.now();
   // Read and parse the request body
   const body = await request.json() as any;
 	const client = new Client({ secret: env.FAUNA_SECRET });
@@ -88,7 +91,8 @@ async function createNewProduct(request: Request, env: Env): Promise<Response> {
 					}
 				}
 		`);
-		return new Response(JSON.stringify(result.data));
+		const timeTaken = Date.now() - startTime;
+		return new Response(JSON.stringify({...result.data, stats: result.stats, worker_execution_time_ms: timeTaken}));
 	}
 	catch (error) {
 		console.error(error);
