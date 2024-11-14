@@ -1,0 +1,2 @@
+/api/* http://ec2-54-198-221-235.compute-1.amazonaws.com:3000/:splat 200
+/west/* http://ec2-54-151-70-101.us-west-1.compute.amazonaws.com:3000/:splat 200
