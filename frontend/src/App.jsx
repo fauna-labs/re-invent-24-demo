@@ -86,33 +86,32 @@ const SelectWithButtons = () => {
     
     return (
       <div className="space-y-4">
-        <div className="flex items-center gap-2 bg-green-50 p-4 rounded-lg">
-          <span className="font-semibold text-green-700">DB Query Time:</span>
+        <div className="flex items-center gap-2 bg-gray-50 p-4 rounded-lg">
+          <span className="font-semibold text-green-700">Fauna:</span>
           <span className="text-green-600 bg-green-100 px-3 py-1 rounded-full">
             {stats.query_time_ms}ms
           </span>
-        </div>
-        <div className="flex items-center gap-2 bg-blue-50 p-4 rounded-lg">
-          <span className="font-semibold text-blue-700">Cloudflare Exec Time:</span>
+          <span className="font-semibold text-blue-700">CF + DB:</span>
           <span className="text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
             {worker_execution_time_ms}ms
           </span>
-        </div>
-        <div className="flex items-center gap-2 bg-yellow-50 p-4 rounded-lg">
-          <span className="font-semibold text-yellow-700">Total Time (Client):</span>
+          <span className="font-semibold text-yellow-700">Total (CF + DB + Client):</span>
           <span className="text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full">
             {timeTaken}
           </span>
         </div>
+
         {
   message === 'Data written successfully' ? (
     <div className="bg-gray-50 p-4 rounded-lg">
       <div className="bg-gray-50 p-4 rounded-lg">
-        <span className="text-green-600">{message}</span>
+        <span className="text-green-600">{message}! ID: {restData.data.id}</span>
       </div>
       <pre className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
         <code>
           {`
+            // Get the category by name. We can use .first() here because we know that the category exists.
+
             let category = Category.byName(\${category}).first()
             if (category == null) abort("Category does not exist.")
             
@@ -122,9 +121,10 @@ const SelectWithButtons = () => {
               price: \${price}, 
               stock: \${stock}, 
               description: \${description}, 
-              category: category 
+              category: category  // Use the category variable here.
             }
             
+            // Following is a write operation to create a new product.
             let product: Any = Product.create(args)
             
             // Use projection to only return the fields you need.

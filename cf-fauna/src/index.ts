@@ -36,7 +36,7 @@ async function getAllProducts(request: Request, env: Env): Promise<Response> {
 	const client = new Client({ secret: env.FAUNA_SECRET });
 	try {
 		const result = await client.query(fql`
-			Product.byName("The Godfather")
+			Product.where(.name.includes("MacBook ")).last()
 		`);
 		const timeTaken = Date.now() - startTime;
 		return new Response(JSON.stringify({...result.data, stats: result.stats, worker_execution_time_ms: timeTaken}));
